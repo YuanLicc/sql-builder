@@ -6,13 +6,13 @@ import java.util.function.Function;
 
 public interface Columnable<R> {
 
-    HasColumnSql columns(String... columns);
+    HasColumnSql columns(String[][] columns);
 
     HasColumnSql columns(Class javaBeanClass);
 
     HasColumnSql columns(Class javaBeanClass, Function<Class, String[]> classToColumns);
 
-    HasColumnSql distinctColumns(String ... columns);
+    HasColumnSql distinctColumns(String[][] columns);
 
     HasColumnSql distinctColumns(Class javaBeanClass);
 

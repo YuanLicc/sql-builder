@@ -8,7 +8,7 @@ import java.util.function.Function;
 public class SelectSqlImp implements SelectSql {
 
     @Override
-    public HasColumnSql columns(String... columns) {
+    public HasColumnSql columns(String[]... columns) {
 
         return new HasColumnSqlImp(false, columns);
     }
@@ -30,7 +30,7 @@ public class SelectSqlImp implements SelectSql {
     }
 
     @Override
-    public HasColumnSql distinctColumns(String... columns) {
+    public HasColumnSql distinctColumns(String[]... columns) {
 
         return new HasColumnSqlImp(true, columns);
     }

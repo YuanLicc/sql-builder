@@ -10,7 +10,7 @@ import java.util.function.Function;
  */
 public interface HasColumnSql extends SQL {
 
-    AliasColumnSql aliasColumns(String... alias);
+    AliasColumnSql aliasColumns(String[]... alias);
 
     AliasColumnSql aliasColumns(Class javaBeanClass);
 

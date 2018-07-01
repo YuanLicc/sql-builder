@@ -9,10 +9,10 @@ import com.yl.sql.util.ArrayUtil;
 
 public class GroupBySqlImp implements GroupBySql {
 
-    private String[] columns, alias, fromTables;
-    private String[][] groupTablesAndColumns;
+    private String[][] columns, alias, groupTablesAndColumns;
+    private String[] fromTables;
 
-    public GroupBySqlImp(String[] columns, String[] alias, String[] fromTables, String[][] groupTablesAndColumns) {
+    public GroupBySqlImp(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
         if(ArrayUtil.isExistEmpty(groupTablesAndColumns)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
                     "1. groupTablesAndColumns != null && groupTablesAndColumns.length != 0" +

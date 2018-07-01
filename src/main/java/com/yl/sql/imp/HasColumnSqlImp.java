@@ -8,24 +8,25 @@ import java.util.function.Function;
 
 public class HasColumnSqlImp implements HasColumnSql {
 
-    private String[] columns;
+    private String[][] columns;
     private boolean isDistinct = false;
 
-    public HasColumnSqlImp(boolean isDistinct, String[] columns) {
+    public HasColumnSqlImp(boolean isDistinct, String[]... columns) {
         validateColumns(columns);
         this.columns = columns;
         this.isDistinct = isDistinct;
     }
 
-    private void validateColumns(String[] columns) {
-        if(ArrayUtil.isEmpty(columns)) {
+    private void validateColumns(String[]... columns) {
+        if(ArrayUtil.isExistEmpty(columns)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. columns != null && columns.length != 0");
+                    "1. columns != null && columns.length != 0\n" +
+                    "2. column in columns, column != null && column.length != 0");
         }
     }
 
     @Override
-    public AliasColumnSql aliasColumns(String... alias) {
+    public AliasColumnSql aliasColumns(String[]... alias) {
 
         return new AliasColumnSqlImp(this.columns, alias);
     }
@@ -35,7 +36,10 @@ public class HasColumnSqlImp implements HasColumnSql {
 
         String[] alias = SelectSql.defaultClassToColumns.apply(javaBeanClass);
 
-        return new AliasColumnSqlImp(this.columns, alias);
+        String[][] aliasArr = new String[1][];
+        aliasArr[0] = alias;
+
+        return new AliasColumnSqlImp(this.columns, aliasArr);
     }
 
     @Override
@@ -43,7 +47,10 @@ public class HasColumnSqlImp implements HasColumnSql {
 
         String[] alias = classToColumns.apply(javaBeanClass);
 
-        return new AliasColumnSqlImp(this.columns, alias);
+        String[][] aliasArr = new String[1][];
+        aliasArr[0] = alias;
+
+        return new AliasColumnSqlImp(this.columns, aliasArr);
     }
 
     @Override

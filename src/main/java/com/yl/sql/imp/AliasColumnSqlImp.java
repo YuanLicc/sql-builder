@@ -7,11 +7,11 @@ import com.yl.sql.util.ArrayUtil;
 
 public class AliasColumnSqlImp implements AliasColumnSql {
 
-    private String[] columns;
-    private String[] alias;
+    private String[][] columns;
+    private String[][] alias;
 
 
-    public AliasColumnSqlImp(String[] columns, String[] alias) {
+    public AliasColumnSqlImp(String[][] columns, String[][] alias) {
 
         if(ArrayUtil.isExistEmpty(columns, alias)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
