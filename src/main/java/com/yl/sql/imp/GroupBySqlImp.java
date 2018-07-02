@@ -14,6 +14,7 @@ public class GroupBySqlImp implements GroupBySql {
     private String[] fromTables;
 
     public GroupBySqlImp(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
+
         if(ArrayUtil.isExistEmpty(groupTablesAndColumns)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
                     "1. groupTablesAndColumns != null && groupTablesAndColumns.length != 0\n" +
@@ -28,7 +29,8 @@ public class GroupBySqlImp implements GroupBySql {
 
     @Override
     public LimitSql limit(int start, int count) {
-        return null;
+
+        return new LimitSqlImp(this.columns, this.alias, this.fromTables, this.groupTablesAndColumns, start, count);
     }
 
     @Override

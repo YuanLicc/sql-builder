@@ -17,6 +17,10 @@ public final class SqlUtil {
     public static final String AS = "AS";
     public static final String GROUP_BY = "GROUP BY";
 
+    public static String limitAliasSql(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
+
+    }
+
     public static String groupByAliasSql(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
         if(columns.length == alias.length && fromTables.length == columns.length) {
             if(groupTablesAndColumns != null && groupTablesAndColumns.length != 0) {
