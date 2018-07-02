@@ -5,7 +5,7 @@ package com.yl.sql.exception;
  */
 public class ParameterNotMatchException extends RuntimeException {
 
-    public static final String BASE_MESSAGE = "Parameters not met these condition :\n";
+    public static final String BASE_MESSAGE = "\n[WRONG] parameters not met these condition :\n";
 
     public ParameterNotMatchException(String message) {
         super(message);

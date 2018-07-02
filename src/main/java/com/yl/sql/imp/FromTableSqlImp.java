@@ -62,10 +62,10 @@ public class FromTableSqlImp implements FromTablesSql {
     @Override
     public String get() {
         if(this.columns != null && this.alias != null && this.tables != null) {
-            return simpleAliasSql(columns, alias, tables);
+            return SqlUtil.simpleAliasSql(columns, alias, tables);
         }
         else if(this.columns != null && this.tables != null) {
-            return simpleSql(columns, tables);
+            return SqlUtil.simpleSql(columns, tables);
         }
         return null;
     }
@@ -80,47 +80,4 @@ public class FromTableSqlImp implements FromTablesSql {
         return null;
     }
 
-    public String simpleAliasSql(String[][] columns, String[][] alias, String[] tables) {
-        if(columns.length == alias.length && tables.length == columns.length) {
-
-            String sql = SqlUtil.SELECT + SqlUtil.SPACE;
-            String tableDelimiter = SqlUtil.COMMA + SqlUtil.SPACE;
-            String tablesStr = Arrays.stream(tables).collect(Collectors.joining(tableDelimiter, SqlUtil.EMPTY, SqlUtil.SPACE));
-
-            for(int i = 0; i < tables.length; i++) {
-
-                for(int j = 0; j < columns[i].length; j++) {
-                    sql += tables[i] + SqlUtil.SPOT + columns[i][j] + SqlUtil.SPACE
-                            + SqlUtil.AS + SqlUtil.SPACE + alias[i][j] + SqlUtil.COMMA + SqlUtil.SPACE;
-                }
-            }
-            return sql.substring(0, sql.length() - 2) + SqlUtil.SPACE + SqlUtil.FROM + SqlUtil.SPACE + tablesStr;
-        }
-        else {
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. columns.length == tables.length");
-        }
-    }
-
-    private String simpleSql(String[][] columns, String[] tables) {
-        if(tables.length == columns.length) {
-
-            String sql = SqlUtil.SELECT + SqlUtil.SPACE;
-            String tableDelimiter = SqlUtil.COMMA + SqlUtil.SPACE;
-            String tablesStr = Arrays.stream(tables).collect(Collectors.joining(tableDelimiter, SqlUtil.EMPTY, SqlUtil.SPACE));
-
-            for(int i = 0; i < tables.length; i++) {
-                String delimiter = SqlUtil.COMMA + SqlUtil.SPACE + tables[i] + SqlUtil.SPOT;
-                String prefix = tables[i] + SqlUtil.SPOT;
-
-                sql += Arrays.stream(columns[i])
-                        .collect(Collectors.joining(delimiter, prefix, SqlUtil.SPACE));
-            }
-            return sql + SqlUtil.FROM + SqlUtil.SPACE + tablesStr;
-        }
-        else {
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. columns.length == tables.length");
-        }
-    }
 }

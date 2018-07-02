@@ -3,28 +3,31 @@ package com.yl.sql;
 import com.yl.sql.exception.ParameterNotMatchException;
 import junit.framework.TestCase;
 
-public class SimpleTest extends TestCase {
+public class GroupSqlTest extends TestCase {
 
-    public void testSimpleSql() {
+    public void testGroupSql() {
         System.out.println(SqlBuilder.buildSelectSql()
                 .columns(ParametersUtil.columns)
                 .from(ParametersUtil.tables)
+                .groupBy(ParametersUtil.groups)
                 .get());
     }
 
-    public void testSimpleAliasSql() {
+    public void testGroupAliasSql() {
         System.out.println(SqlBuilder.buildSelectSql()
                 .columns(ParametersUtil.columns)
                 .aliasColumns(ParametersUtil.alias)
                 .from(ParametersUtil.tables)
+                .groupBy(ParametersUtil.groups)
                 .get());
     }
 
-    public void testWrongColumnsSimpleSql() {
+    public void testWrongColumnsGroupSql() {
         try {
             System.out.println(SqlBuilder.buildSelectSql()
                     .columns(ParametersUtil.wrongColumns)
                     .from(ParametersUtil.tables)
+                    .groupBy(ParametersUtil.groups)
                     .get());
         }
         catch (ParameterNotMatchException e) {
@@ -32,12 +35,13 @@ public class SimpleTest extends TestCase {
         }
     }
 
-    public void testWrongAliasSimpleAliasSql() {
+    public void testWrongAliasGroupAliasSql() {
         try {
             System.out.println(SqlBuilder.buildSelectSql()
                     .columns(ParametersUtil.columns)
                     .aliasColumns(ParametersUtil.wrongAlias)
                     .from(ParametersUtil.tables)
+                    .groupBy(ParametersUtil.groups)
                     .get());
         }
         catch (ParameterNotMatchException e) {
@@ -45,12 +49,39 @@ public class SimpleTest extends TestCase {
         }
     }
 
+    public void testNullGroupSql() {
+        try {
+            System.out.println(SqlBuilder.buildSelectSql()
+                    .columns(ParametersUtil.columns)
+                    .from(ParametersUtil.tables)
+                    .groupBy(new String[2][2])
+                    .get());
+        }
+        catch (ParameterNotMatchException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-    public void testWrongTableSimpleSql() {
+    public void testNullGroupAliasSql() {
+        try {
+            System.out.println(SqlBuilder.buildSelectSql()
+                    .columns(ParametersUtil.columns)
+                    .aliasColumns(ParametersUtil.alias)
+                    .from(ParametersUtil.tables)
+                    .groupBy(new String[1][2])
+                    .get());
+        }
+        catch (ParameterNotMatchException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void testWrongTableGroupSql() {
         try {
             System.out.println(SqlBuilder.buildSelectSql()
                     .columns(ParametersUtil.columns)
                     .from(ParametersUtil.wrongTables)
+                    .groupBy(ParametersUtil.groups)
                     .get());
         }
         catch (ParameterNotMatchException e) {
@@ -58,17 +89,17 @@ public class SimpleTest extends TestCase {
         }
     }
 
-    public void testWrongTableSimpleAliasSql() {
+    public void testWrongTableGroupAliasSql() {
         try {
             System.out.println(SqlBuilder.buildSelectSql()
                     .columns(ParametersUtil.columns)
                     .aliasColumns(ParametersUtil.alias)
                     .from(ParametersUtil.wrongTables)
+                    .groupBy(ParametersUtil.groups)
                     .get());
         }
         catch (ParameterNotMatchException e) {
             System.out.println(e.getMessage());
         }
     }
-
 }

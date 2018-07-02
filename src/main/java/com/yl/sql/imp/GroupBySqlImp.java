@@ -6,6 +6,7 @@ import com.yl.sql.OrderBySql;
 import com.yl.sql.SelectSql;
 import com.yl.sql.exception.ParameterNotMatchException;
 import com.yl.sql.util.ArrayUtil;
+import com.yl.sql.util.SqlUtil;
 
 public class GroupBySqlImp implements GroupBySql {
 
@@ -15,7 +16,7 @@ public class GroupBySqlImp implements GroupBySql {
     public GroupBySqlImp(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
         if(ArrayUtil.isExistEmpty(groupTablesAndColumns)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. groupTablesAndColumns != null && groupTablesAndColumns.length != 0" +
+                    "1. groupTablesAndColumns != null && groupTablesAndColumns.length != 0\n" +
                     "2. item in groupTablesAndColumns, item != null && item.length == 2");
         }
 
@@ -42,6 +43,18 @@ public class GroupBySqlImp implements GroupBySql {
 
     @Override
     public String get() {
-        return null;
+        if(columns != null && alias != null && fromTables != null && groupTablesAndColumns != null) {
+            return SqlUtil.groupByAliasSql(columns, alias, fromTables, groupTablesAndColumns);
+        }
+        else if(columns != null && fromTables != null && groupTablesAndColumns != null) {
+            return SqlUtil.groupBySql(columns, fromTables, groupTablesAndColumns);
+        }
+        else if(columns != null && fromTables != null) {
+            return SqlUtil.simpleSql(columns, fromTables);
+        }
+        else {
+            throw new ParameterNotMatchException("The parameters can not combine a statement");
+        }
     }
+
 }
