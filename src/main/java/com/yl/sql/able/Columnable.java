@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 /**
  * 表示可插入 column 列的，如 select [columns]
- * @param <R>
+ * @param <R> （后续在做修改）
  * @author YuanLi
  */
 public interface Columnable<R> {
