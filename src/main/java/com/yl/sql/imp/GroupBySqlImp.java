@@ -4,16 +4,19 @@ import com.yl.sql.GroupBySql;
 import com.yl.sql.LimitSql;
 import com.yl.sql.OrderBySql;
 import com.yl.sql.SelectSql;
+import com.yl.sql.entity.Select;
 import com.yl.sql.exception.ParameterNotMatchException;
 import com.yl.sql.util.ArrayUtil;
-import com.yl.sql.util.SqlUtil;
+
+import java.util.List;
 
 public class GroupBySqlImp implements GroupBySql {
 
     private String[][] columns, alias, groupTablesAndColumns;
     private String[] fromTables;
 
-    public GroupBySqlImp(String[][] columns, String[][] alias, String[] fromTables, String[][] groupTablesAndColumns) {
+    public GroupBySqlImp(List<String[]> columnsList, List<String[]> aliasList, String[] fromTables
+            , List<Select> clauses, String[][] groupTablesAndColumns) {
 
         if(ArrayUtil.isExistEmpty(groupTablesAndColumns)) {
             throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
@@ -27,36 +30,18 @@ public class GroupBySqlImp implements GroupBySql {
         this.groupTablesAndColumns = groupTablesAndColumns;
     }
 
-    @Override
     public LimitSql limit(int start, int count) {
 
-        return new LimitSqlImp(this.columns, this.alias, this.fromTables, this.groupTablesAndColumns, start, count);
+        return new LimitSqlImp(this.columns, this.alias, this.fromTables
+                , this.groupTablesAndColumns, start, count);
     }
 
-    @Override
     public OrderBySql orderBy(String[]... tablesColumns) {
         return null;
     }
 
-    @Override
     public SelectSql union() {
         return null;
-    }
-
-    @Override
-    public String get() {
-        if(columns != null && alias != null && fromTables != null && groupTablesAndColumns != null) {
-            return SqlUtil.groupByAliasSql(columns, alias, fromTables, groupTablesAndColumns);
-        }
-        else if(columns != null && fromTables != null && groupTablesAndColumns != null) {
-            return SqlUtil.groupBySql(columns, fromTables, groupTablesAndColumns);
-        }
-        else if(columns != null && fromTables != null) {
-            return SqlUtil.simpleSql(columns, fromTables);
-        }
-        else {
-            throw new ParameterNotMatchException("The parameters can not combine a statement");
-        }
     }
 
 }

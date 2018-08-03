@@ -4,6 +4,11 @@ import com.yl.sql.HasColumnSql;
 
 import java.util.function.Function;
 
+/**
+ * 表示可插入 column 列的，如 select [columns]
+ * @param <R>
+ * @author YuanLi
+ */
 public interface Columnable<R> {
 
     HasColumnSql columns(String[][] columns);

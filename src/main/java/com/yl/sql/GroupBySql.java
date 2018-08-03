@@ -6,5 +6,5 @@ import com.yl.sql.able.Unionable;
 
 import java.util.function.Supplier;
 
-public interface GroupBySql extends SQL, Supplier<String>, Limitable<LimitSql>, Orderable<OrderBySql>, Unionable<SelectSql> {
+public interface GroupBySql extends SQL {
 }

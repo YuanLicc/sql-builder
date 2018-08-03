@@ -5,7 +5,4 @@ package com.yl.sql;
  */
 public interface JoinTableSql extends SQL {
 
-    void clause();
-    void on(String joinTable);
-
 }

@@ -23,9 +23,4 @@ public class LimitSqlImp implements LimitSql {
         this.count = count;
     }
 
-    @Override
-    public String get() {
-        return null;
-    }
-
 }

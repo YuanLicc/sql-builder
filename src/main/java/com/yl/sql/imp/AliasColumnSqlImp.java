@@ -1,36 +1,56 @@
 package com.yl.sql.imp;
 
-import com.yl.sql.AliasColumnSql;
-import com.yl.sql.FromTablesSql;
-import com.yl.sql.exception.ParameterNotMatchException;
-import com.yl.sql.util.ArrayUtil;
+import com.yl.sql.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 public class AliasColumnSqlImp implements AliasColumnSql {
 
-    private String[][] columns;
-    private String[][] alias;
+    private List<String[]> columnsList, aliasList;
 
+    public AliasColumnSqlImp(List<String[]> columnsList, String[] alias) {
+        this.columnsList = columnsList;
 
-    public AliasColumnSqlImp(String[][] columns, String[][] alias) {
-
-        if(ArrayUtil.isExistEmpty(columns, alias)) {
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. columns, alias, tables not null\n" +
-                    "2. the length of columns, alias, tables not be 0");
+        if(aliasList == null) {
+            aliasList = new ArrayList<>();
         }
-        else if(columns.length != alias.length){
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. columns.length == alias.length");
-        }
-        this.columns = columns;
-        this.alias = alias;
+        this.aliasList.add(alias);
     }
 
+    public AliasColumnSqlImp(List<String[]> columnsList, String[][] alias) {
+        this.columnsList = columnsList;
+        this.aliasList = Arrays.asList(alias);
+    }
 
-    @Override
-    public FromTablesSql from(String... tables) {
+    public AliasColumnSqlImp(List<String[]> columnsList, List<String[]> alias) {
+        this.columnsList = columnsList;
+        this.aliasList = alias;
+    }
 
-        return new FromTableSqlImp(this.columns, this.columns, tables);
+    public HasColumnSql columns(String[] columns) {
+        columnsList.add(columns);
+        return new HasColumnSqlImp(columnsList, aliasList);
+    }
+
+    public HasColumnSql columns(Class javaBeanClass) {
+
+        String[] columns = ClassToColumns.defaultImp(javaBeanClass);
+        columnsList.add(columns);
+        return new HasColumnSqlImp(this.columnsList, aliasList);
+    }
+
+    public HasColumnSql columns(Class javaBeanClass, Function<Class, String[]> classToColumns) {
+        String[] alias = classToColumns.apply(javaBeanClass);
+        columnsList.add(alias);
+        return new HasColumnSqlImp(this.columnsList, aliasList);
+    }
+
+    public FromTablesSql from(String[] tables) {
+
+        return new FromTableSqlImp(this.columnsList, this.aliasList, tables);
     }
 
 }

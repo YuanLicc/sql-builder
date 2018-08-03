@@ -1,83 +1,63 @@
 package com.yl.sql.imp;
 
 import com.yl.sql.*;
-import com.yl.sql.exception.ParameterNotMatchException;
-import com.yl.sql.type.JoinType;
-import com.yl.sql.type.WhereType;
-import com.yl.sql.util.ArrayUtil;
-import com.yl.sql.util.SqlUtil;
+import com.yl.sql.entity.Select;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class FromTableSqlImp implements FromTablesSql {
 
-    private String[][] columns, alias;
+    private List<String[]> columnsList, aliasList;
     private String[] tables;
+    private List<Select> clauses;
 
-    public FromTableSqlImp(String[][] columns, String[][] alias, String[] tables) {
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, String[] tables) {
 
-        if(ArrayUtil.isEmpty(tables)) {
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                "1. tables != null && tables.length != 0");
-        }
-
-        this.columns = columns;
-        this.alias = alias;
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
         this.tables = tables;
     }
 
-    public FromTableSqlImp(String[][] columns, String[] tables) {
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, Select[] clauses) {
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
+        this.clauses = Arrays.asList(clauses);
+    }
 
-        if(ArrayUtil.isEmpty(tables)) {
-            throw new ParameterNotMatchException(ParameterNotMatchException.BASE_MESSAGE +
-                    "1. tables != null && tables.length != 0");
-        }
-
-        this.columns = columns;
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, String[] tables, Select[] clauses) {
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
         this.tables = tables;
+        this.clauses = Arrays.asList(clauses);
     }
 
-    @Override
-    public GroupBySql groupBy(String[]... tablesAndColumns) {
-
-        return new GroupBySqlImp(this.columns, this.alias, this.tables, tablesAndColumns);
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, String table, Select[] clauses) {
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
+        this.tables = new String[1];
+        this.tables[0] = table;
+        this.clauses = Arrays.asList(clauses);
     }
 
-    @Override
-    public JoinTableSql joinType(JoinType joinType) {
-        return null;
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, String[] tables, Select clause) {
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
+        this.tables = tables;
+        this.clauses = Arrays.asList(clause);
     }
 
-    @Override
-    public SelectSql union() {
-        return null;
+    public FromTableSqlImp(List<String[]> columnsList, List<String[]> aliasList, String table, Select clause) {
+        this.columnsList = columnsList;
+        this.aliasList = aliasList;
+        this.tables = new String[1];
+        this.tables[0] = table;
+        this.clauses = Arrays.asList(clause);
     }
 
-    @Override
-    public WhereSql where(String table, String column, WhereType type) {
-        return null;
-    }
+    public FromTableAliasSql as(String... tablesAlias) {
 
-    @Override
-    public String get() {
-        if(this.columns != null && this.alias != null && this.tables != null) {
-            return SqlUtil.simpleAliasSql(columns, alias, tables);
-        }
-        else if(this.columns != null && this.tables != null) {
-            return SqlUtil.simpleSql(columns, tables);
-        }
-        return null;
-    }
-
-    @Override
-    public WhereBetweenSql whereBetween(String table, String column) {
-        return null;
-    }
-
-    @Override
-    public WhereBetweenSql whereNotBetween(String table, String column) {
-        return null;
+        return new FromTableAliasSqlImp(columnsList, aliasList, tables, clauses, tablesAlias);
     }
 
 }

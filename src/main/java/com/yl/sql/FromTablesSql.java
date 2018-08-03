@@ -11,7 +11,6 @@ import java.util.function.Supplier;
 /**
  * Select * from table [group by] | [union] | [join] | [where] | [where between] | [where in ()]
  */
-public interface FromTablesSql extends SQL, Supplier<String>, Groupable<GroupBySql>
-        , Unionable<SelectSql>, Joinable<JoinTableSql>, Whereable<WhereSql>, Betweenable<WhereBetweenSql> {
+public interface FromTablesSql extends SQL {
 
 }

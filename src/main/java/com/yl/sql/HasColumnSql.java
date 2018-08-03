@@ -1,7 +1,5 @@
 package com.yl.sql;
 
-import java.util.function.Function;
-
 /**
  * SELECT columns [alias] | from [table]
  * 1. 为前面通过的columns 进行别名操作 - 转换为{@link AliasColumnSql}
@@ -9,13 +7,5 @@ import java.util.function.Function;
  * 3. 指定INTO表名 - 转换为{@link IntoSql}
  */
 public interface HasColumnSql extends SQL {
-
-    AliasColumnSql aliasColumns(String[]... alias);
-
-    AliasColumnSql aliasColumns(Class javaBeanClass);
-
-    AliasColumnSql aliasColumns(Class javaBeanClass, Function<Class, String[]> classToColumns);
-
-    FromTablesSql from(String... tables);
 
 }

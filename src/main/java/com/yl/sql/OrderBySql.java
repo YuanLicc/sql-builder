@@ -5,6 +5,6 @@ import com.yl.sql.able.Unionable;
 
 import java.util.function.Supplier;
 
-public interface OrderBySql extends SQL, Supplier<String>, Limitable<LimitSql>, Unionable<SelectSql> {
+public interface OrderBySql extends SQL {
 
 }

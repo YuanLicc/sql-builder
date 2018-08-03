@@ -1,7 +1,12 @@
-.settings/
 .idea/
+.settings/
 build/
+.bin/
 bin/
-target/
-.classpath
 .project
+.classpath
+*/out/
+*/build/
+*.iml
+target/
+
