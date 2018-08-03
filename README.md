@@ -1,4 +1,4 @@
-## sql-builder [![Build Status](https://travis-ci.org/YuanLicc/sql-builder.svg?branch=master)](https://travis-ci.org/YuanLicc/sql-builder) [![codecov.io](https://codecov.io/gh/YuanLicc/sql-builder/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/YuanLicc/sql-builder?branch=master)
+## sql-builder [![Build Status](https://travis-ci.org/YuanLicc/sql-builder.svg?branch=master)](https://travis-ci.org/YuanLicc/sql-builder) [![codecov.io](https://codecov.io/gh/YuanLicc/sql-builder/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/YuanLicc/sql-builder?branch=master) [![GitHub version](https://badge.fury.io/gh/yuanlicc%2Fsql-builder.svg)](https://badge.fury.io/gh/yuanlicc%2Fsql-builder)
 
 SQL语句构建器。本项目目前连简单查询都不能做到，因为中间遇到的问题太多了，若初步完成，我会打个 tag，也希望感兴趣的能够和我一起想想怎么设计。大力么么哒。
 
